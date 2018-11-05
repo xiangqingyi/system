@@ -1,0 +1,55 @@
+doctype html
+html(lang='en')
+  head
+    title Register
+    link(rel='stylesheet', href='/assets/plugins/bootstrap/dist/css/bootstrap.min.css')
+    link(rel='stylesheet', href='/assets/plugins/font-awesome/css/font-awesome.min.css')
+    link(rel='stylesheet', href='/assets/plugins/Ionicons/css/ionicons.min.css')
+    link(rel='stylesheet', href='/assets/plugins/admin-lte/dist/css/AdminLTE.min.css')
+    link(rel='stylesheet', href='/assets/plugins/admin-lte/plugins/iCheck/square/blue.css')
+    script(src='/assets/plugins/jquery/dist/jquery.min.js')
+    script(src='/assets/bootstrap/bootstrap/dist/js/bootstrap.min.js')
+    script(src='/assets/plugins/iCheck/icheck.min.js')
+    
+  body.hold-transition.register-page
+    .register-box
+      .register-logo
+        p
+          b System Register
+      .register-box-body
+        p.login-box-msg Register a new membership
+        form(action='../../index.html', method='post')
+          .form-group.has-feedback
+            input#register_nick_input.form-control(type='text', placeholder='nick')
+            span.glyphicon.glyphicon-user.form-control-feedback
+          .form-group.has-feedback
+            input#register_realname_input.form-control(type="text",placeholder="realname")
+            span.glyphicon.glyphicon-user.form-control-feedback
+          .form-group.has-feedback
+            input#register_pwd_input.form-control(type='password', placeholder='Password')
+            span.glyphicon.glyphicon-lock.form-control-feedback
+          .form-group.has-feedback
+            input#register_repwd_input.form-control(type='password', placeholder='Retype password')
+            span.glyphicon.glyphicon-log-in.form-control-feedback
+          .row
+            .col-xs-8
+              .checkbox.icheck
+                label
+                  input(type='checkbox')
+                  |  I agree to the 
+                  a(href='#') terms
+            // /.col
+            .col-xs-4
+              button.btn.btn-primary.btn-block.btn-flat(type='button' onclick="Register_Click()") Register
+            // /.col
+        .social-auth-links.text-center
+          p - OR -
+          a.btn.btn-block.btn-social.btn-facebook.btn-flat(href='#')
+            i.fa.fa-facebook
+            |  Sign up using
+            |           Facebook
+          a.btn.btn-block.btn-social.btn-google.btn-flat(href='#')
+            i.fa.fa-google-plus
+            |  Sign up using
+            |           Google+
+        a.text-center(href='登录的地址') I already have a membership

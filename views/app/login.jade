@@ -1,0 +1,47 @@
+doctype html
+html(lang='en')
+  head
+    title Sign
+    link(rel='stylesheet', href='/assets/plugins/bootstrap/dist/css/bootstrap.min.css')
+    link(rel='stylesheet', href='/assets/plugins/font-awesome/css/font-awesome.min.css')
+    link(rel='stylesheet', href='/assets/plugins/Ionicons/css/ionicons.min.css')
+    link(rel='stylesheet', href='/assets/plugins/admin-lte/dist/css/AdminLTE.min.css')
+    link(rel='stylesheet', href='/assets/plugins/admin-lte/plugins/iCheck/square/blue.css')
+    script(src='/assets/plugins/jquery/dist/jquery.min.js')
+    script(src='/assets/bootstrap/bootstrap/dist/js/bootstrap.min.js')
+    script(src='/assets/plugins/iCheck/icheck.min.js')
+    script(src="/assets/app/js/index.js")
+  body.hold-transition.login-page
+    .login-box
+      .login-logo
+        b Systerm Sign
+      .login-box-body
+        p.login-box-msg Sign in to start your session
+        form(method='post')
+          .from-group.has-feedback
+            input#sign_nick_input.form-control(type='text', placeholder='input your nick')
+            span.glyphicon.glyphicon-lock.form-control-feedback
+          .form-group.has-feedback
+            input#sign_pwd_input.form-control(type='password', placeholder='Password')
+            span.glyphicon.glyphicon-lock.form-control-feedback
+          .row
+            .col-xs-8
+              .checkbox.ichcek
+                label
+                  input(type='checkbox')
+                  |  Remember Me
+            .col-xs-4
+              button.btn.btn-primary.btn-block.btn-flat(type='button' onclick="Sign_Click()") Sign In
+        .social-auth-links.text-center
+          p - OR -
+          a.btn.btn-block.btn-social.btn-facebook.btn-flat(href='#')
+            i.fa.fa-facebook
+            |  Sign in using
+            |          Facebook
+          a.btn.btn-block.btn-social.btn-google.btn-flat(href='#')
+            i.fa.fa-google-plus
+            |  Sign in using
+            |          Google+
+        a(href='#') I forgot my password
+        br
+        a.text-center(href='注册的地址') Register a new membership
