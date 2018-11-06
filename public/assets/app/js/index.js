@@ -60,3 +60,7 @@ function Register_Click() {
            console.log(error);
        })
 }
+
+function Admin_List_Show() {
+    
+}
