@@ -73,3 +73,8 @@ exports.register = async (req,res) => {
        res.render('app/register')
    }
 }
+
+// 获取admin列表
+exports.adminList = async (req,res) => {
+    
+}
