@@ -8,13 +8,13 @@ html(lang='en')
     .row
       .col-4
         #list-tab.list-group(role='tablist')
-          a.list-group-item.list-group-item-action.active(data-toggle='list', href='#list-home', role='tab', aria-controls='home') Home
-          a.list-group-item.list-group-item-action(data-toggle='list', href='#list-profile', role='tab', aria-controls='profile') Profile
-          a.list-group-item.list-group-item-action(data-toggle='list', href='#list-messages', role='tab', aria-controls='messages') Messages
-          a.list-group-item.list-group-item-action(data-toggle='list', href='#list-settings', role='tab', aria-controls='settings') Settings
+          a.list-group-item.list-group-item-action(data-toggle='list', href='#list-home', role='tab') Home
+          a.list-group-item.list-group-item-action(data-toggle='list', href='#list-profile', role='tab') Profile
+          a.list-group-item.list-group-item-action(data-toggle='list', href='#list-messages', role='tab') Messages
+          a.list-group-item.list-group-item-action(data-toggle='list', href='#list-settings', role='tab') Settings
       .col-8
         #nav-tabContent.tab-content
-          .tab-pane.fade.show.active(role='tabpanel', aria-labelledby='list-home-list') 简介1
-          .tab-pane.fade(role='tabpanel', aria-labelledby='list-profile-list') 简介2
-          .tab-pane.fade(role='tabpanel', aria-labelledby='list-messages-list') 简介3
-          .tab-pane.fade(role='tabpanel', aria-labelledby='list-settings-list') 简介4
+          .tab-pane.fade(role='tabpanel') 简介1
+          .tab-pane.fade(role='tabpanel') 简介2
+          .tab-pane.fade(role='tabpanel') 简介3
+          .tab-pane.fade(role='tabpanel') 简介4
