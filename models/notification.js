@@ -10,29 +10,28 @@ const NotificationSchema = new Schema({
     },
     from: {
         type: Schema.ObjectId,
-        ref: 'user'
+        ref: 'User'
     },
-    to: [{
+    // 目前是一次只能给一个用户发送消息
+    to: {
         type: Schema.ObjectId,
-        ref:'user'
-    }],
+        ref:'User'
+    },
     broadcast: {
         type:Boolean,
         default:false
     },
-    type: {
-        type: String,
-        default: ''
-    },
-    // 已读
+    // 已读用户
     read: [{
         type: Schema.ObjectId,
-        ref:'user'
+        ref:'User'
     }],
+    // 未读用户
     unread: [{
         type: Schema.ObjectId,
         ref:'User'
     }],
+    // 已删除用户
     deleted: [{
         type:Schema.ObjectId,
         ref:'User'
@@ -42,7 +41,7 @@ const NotificationSchema = new Schema({
         default: Date.now
     },
     status: {
-        type: Number,
+        type: Number,    
         default: 0
     }
 });

@@ -1,7 +1,7 @@
 'use strict';
 const mongoose = require('mongoose');
 const User = mongoose.model('User');
-
+const Notification = mongoose.model('Notification');
 
 exports.login = async (req,res) => {
     const nick = req.body.nick;
@@ -76,5 +76,53 @@ exports.register = async (req,res) => {
 
 // 获取admin列表
 exports.adminList = async (req,res) => {
-    
+    if(req.method === 'GET') {
+        const adminList = await User.find({roles: 2});
+        if (adminList) {
+            res.json ({
+                success: true,
+                adminList: adminList,
+                message: 'Get Success'
+            })
+        } else {
+            res.json ({
+                success: false,
+                message: 'no data'
+            })
+        }
+    } else if (req.method === 'POST') {
+
+    }
+}
+
+
+// notification 
+exports.AllNotification  = async (req,res) => {
+    if (req.method === 'GET') {
+
+    } else if (req.method === 'POST') {
+        const user = req.session.user;
+        const to_id = req.body.adminId;
+        const content =  req.body.content;
+        const new_notification = {
+            content: content,
+            from: user._id,
+            to: to_id,
+            broadcast: false,
+            status: 1
+        }
+        const _new_notification = await Notification(new_notification);
+        const save_new_notification = _new_notification.save();
+        if (save_new_notification) {
+            res.json({
+                success: true,
+                message: '发送成功'
+            })
+        } else {
+            res.json({
+                success: false,
+                message: '发送失败'
+            })
+        }
+    }
 }

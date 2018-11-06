@@ -16,3 +16,11 @@ exports.login = async (req,res) =>{
     }
 
 }
+exports.register = async (req,res) => {
+    if (req.method === 'GET') {
+        res.render('app/register',{
+            message:'请先注册',
+            user: req.session.user
+        })
+    }
+}

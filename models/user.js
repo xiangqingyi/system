@@ -9,8 +9,7 @@ const userSchema = new Schema({
         required:true
     },
     realname: {
-        type:Schema.ObjectId,
-        ref:'UserInfo'
+        type:String
     },
     createDate: {
         type: Date,
@@ -27,6 +26,9 @@ const userSchema = new Schema({
     password: {
         type: String,
         required: true
+    },
+    description: {
+        type: String
     }
 
 })
