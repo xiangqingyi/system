@@ -23,18 +23,15 @@ const NotificationSchema = new Schema({
     },
     // 已读用户
     read: [{
-        type: Schema.ObjectId,
-        ref:'User'
+        type: Schema.Types.Mixed
     }],
     // 未读用户
     unread: [{
-        type: Schema.ObjectId,
-        ref:'User'
+        type: Schema.Types.Mixed
     }],
     // 已删除用户
     deleted: [{
-        type:Schema.ObjectId,
-        ref:'User'
+        type: Schema.Types.Mixed
     }],
     created:{
         type: Date,
