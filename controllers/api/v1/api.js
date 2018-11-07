@@ -2,20 +2,24 @@
 const mongoose = require('mongoose');
 const User = mongoose.model('User');
 const Notification = mongoose.model('Notification');
+const core = require('../../../lib/core');
 
 exports.login = async (req,res) => {
     const nick = req.body.nick;
     const password = req.body.password;
     const _user = await User.find({nick: nick});   
     if(req.method === 'POST') {
-        if (_user) {
+        if (_user.length === 1) {
             // 已存在就登陆
-             if (_user.password === password) {
-                 req.session.user = _user;
-                 return res.json({
-                     success: true,
-                     message: '登录成功'
-                 })
+             if (_user[0].password === password) {
+                 req.session.user = _user[0];
+                 let path = core.translateHomePageDir('/');
+                 return res.redirect(path);
+                //  return res.json({
+                //      success: true,
+                //      message: '登录成功'
+                //  })
+
              } else {
                  return res.json({
                      success:false,
@@ -42,7 +46,7 @@ exports.register = async (req,res) => {
 
    const _user = await User.find({nick: nick});
    if (req.method === "POST") {
-       if (_user) {
+       if (_user.length === 1) {
         //    已经存在
         return res.json({
             success: false,
@@ -99,18 +103,38 @@ exports.adminList = async (req,res) => {
 // notification 
 exports.AllNotification  = async (req,res) => {
     if (req.method === 'GET') {
-
+        // 目前还没写到admin
+        // const to_id = req.body.to_id;
+        const to_id = req.params.id;
+        const receive_notification = await Notification.find({to: to_id});
+        if (receive_notification) {
+            res.json({
+                success: true,
+                message: '接收成功'
+            })
+        } else {
+            res.josn({
+                success: false,
+                message: '接收失败'
+            })
+        }
     } else if (req.method === 'POST') {
         const user = req.session.user;
         const to_id = req.body.adminId;
         const content =  req.body.content;
+        const to_user = await User.find({_id: to_id});
         const new_notification = {
             content: content,
             from: user._id,
             to: to_id,
             broadcast: false,
-            status: 1
+            status: 1,
         }
+        new_notification.unread = [];
+        new_notification.unread.push({
+            userId: to_user[0]._id,
+            realname: to_user[0].realname 
+        })
         const _new_notification = await Notification(new_notification);
         const save_new_notification = _new_notification.save();
         if (save_new_notification) {
