@@ -12,8 +12,11 @@ let bodyParser = require('body-parser');
 let csrf = require('csurf');
 let moment = require('moment');
 let _ = require('lodash');
-let config = require('./config/config');
-let util = require('./lib/util');
+// let config = require('./config/config');
+let config = require('./config');
+let core = require('./lib/core');
+// let util = require('./lib/util');
+
 let cookieParser = require('cookie-parser');
 
 let indexRouter = require('./routes/index');
@@ -23,14 +26,14 @@ let app = express();
 let appPath = process.cwd();
 app.use(compression());
 mongoose.Promise = global.Promise;
-mongoose.connect(config.mongodb.uri,{useNewUrlParser:true}).then(function(db) {
+mongoose.connect(config.mongodb.uri,{useNewUrlParser: true}).then(function(db) {
   console.log("mongo连接成功");
 },function(err) {
   console.log('mongo连接失败',err)
 })
 
 // 载入数据模型
-util.walk(appPath + '/models',null,function(path) {
+core.walk(appPath + '/models',null,function(path) {
   require(path);
 });
 // view engine setup
@@ -43,9 +46,9 @@ app.locals = {
   pretty: true,
   moment: moment,
   _: _,
-  util: util,
+  homepage: config.homepage.dir,
+  core: core,
   config: config,
-  adminDir: config.admin.dir ? ('/'+config.admin/dir) : '',
   gravatar: gravatar,
   env: config.env
 }
@@ -68,12 +71,13 @@ app.use(session({
   secret: config.sessionSecret || 'system',
   store: (config.redis.host ? new RedisStore(conf.redis) : null) 
 }))
-util.walk(appPath + '/routes/api','middlewares',function(path){
+core.walk(appPath + '/routes/api','middlewares',function(path){
   require(path)(app);
 });
+
 app.use(csrf());
 app.use(function(req,res,next) {
-  res.header('X-Powered-By','wengqianshan');
+  res.header('X-Powered-By','superxqy');
   res.locals.token = req.csrfToken && req.csrfToken();
   res.locals.query = req.query;
   if(req.session && req,session.user) {
@@ -96,10 +100,11 @@ app.use(function(req,res,next) {
   next();
 });
 //路由控制
-util.walk(appPath + '/routes/app','middlwares',function(path) {
+
+core.walk(appPath + '/routes/app','middlewares',function(path) {
   require(path)(app);
 });
-util.walk(appPath + '/routes/server','middlewares',function(path) {
+core.walk(appPath + '/routes/server','middlewares',function(path) {
   require(path)(app)
 })
 
@@ -118,5 +123,14 @@ app.use(function(err, req, res, next) {
   res.status(err.status || 500);
   res.render('error');
 });
+
+app.set('port', process.env.PORT || config.port || 7000);
+let server = app.listen(app.get('port'), function() {
+    core.logger.info('網站服務啟動，端口： ' + server.address().port);
+    core.logger.info('環境變數： ' + config.env);
+    core.logger.info('mongodb url： ' + config.mongodb.uri);
+    core.logger.info('redis url： ' + config.redis.host + ':' + config.redis.port);        
+});
+
 
 module.exports = app;
