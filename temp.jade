@@ -1,0 +1,85 @@
+//事件視窗(新增/修改)
+#modal_event.modal.fade(data-backdrop="false",data-keyboard="false")
+    .modal-dialog
+      .modal-content
+        .modal-header
+          button.close(type="button", data-dismiss="modal", aria-label="Close")
+            span(aria-hidden="true") ×
+          |                 
+          h4#modal_event_Title.modal-title modal_event Title
+        |               
+        .modal-body
+           form#defaultForm.form-horizontal(action="")
+              input#modal_event_eventid.form-controll(type="hidden", name="")
+              
+              .form-group
+               label.control-label.col-sm-2(for="eventTitle") 標題： 
+               .col-sm-10
+                  input#modal_event_eventTitle.form-control(type="text", placeholder="請輸入標題")
+              .form-group
+                label.control-label.col-sm-2(for="datepickerStart") 開始：
+                .col-sm-6
+                  input#modal_event_datepickerStart.form-control(type="date")
+                .col-sm-4
+                  input#modal_event_timepickerStart.form-control(type="text", readonly="")
+              .form-group
+                label.control-label.col-sm-2(for="datepickerEnd") 結束：
+                .col-sm-6
+                  input#modal_event_datepickerEnd.form-control(type="date")
+                .col-sm-4
+                  input#modal_event_timepickerEnd.form-control(type="text", readonly="")
+              .form-group
+                label.control-label.col-sm-2 顏色：     
+                .col-sm-10
+                  label.radio-inline
+                      input#modal_event_box1_input(type="radio", name="optradio",value='cornflowerblue')
+                      #modal_event_box1
+                  label.radio-inline
+                      input#modal_event_box2_input(type="radio", name="optradio",value='darkgreen')
+                      #modal_event_box2
+                  label.radio-inline
+                      input#modal_event_box3_input(type="radio", name="optradio",value='darkgray')
+                      #modal_event_box3
+                  label.radio-inline
+                      input#modal_event_box4_input(type="radio", name="optradio",value='red')
+                      #modal_event_box4 
+              .form-group
+                 label.control-label.col-sm-2 選項：
+                 .col-sm-10      
+                    input#modal_event_isPrivate_input(type="checkbox") 
+                    label 是否為私有事件
+              #modal_event_readlist.form-group
+                 label.control-label.col-sm-2 可看清單
+                 .col-sm-10
+                     select#modal_event_readlist_select.form-control.select2(multiple="multiple", data-placeholder="可看清單", style="width: 100%;")
+                      option Alabama
+                      |                   
+                      option Alaska
+                      |                   
+                      option California
+                      |                   
+                      option Delaware
+                      |                   
+                      option Tennessee
+                      |                   
+                      option Texas
+                      |                   
+                      option Washington
+              .form-group.event-info
+               label.control-label.col-sm-2(for="modal_event_Author") 建立人： 
+               .col-sm-10
+                  input#modal_event_Author.form-control(type="text", readonly="")
+              .form-group.event-info
+               label.control-label.col-sm-2(for="modal_event_LastUpdateDate") 修改時間： 
+               .col-sm-10
+                  input#modal_event_LastUpdateDate.form-control(type="text", readonly="")
+              .form-group
+                #modal_event_Message.alert.alert-danger(style="display:none") Message
+                               
+           // /.form              
+        .modal-footer
+          button#modal_event_delBtn.btn.btn-danger(type="button",onclick="modal_event_delBtn_click()") 删除
+          |                 
+          button#modal_event_createBtn.btn.btn-primary(type="button" ,onclick="modal_event_createBtn_click()") 新建
+          |                 
+          button#modal_event_updateBtn.btn.btn-primary(type="button" ,onclick="modal_event_updateBtn_click()") 更新
