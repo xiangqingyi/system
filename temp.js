@@ -1,3 +1,5 @@
+
+/**
 const schedule = require('node-schedule');
 
 function scheduleCronstyle() {
@@ -6,3 +8,8 @@ function scheduleCronstyle() {
   })
 }
 scheduleCronstyle();
+
+**/
+const url = require('url');
+const text = url.resolve("http://civetInterface.foxconn.com/","Open/ScanPage?redirect_uri=http://10.142.214.89:3030/civetsso&scope=snsapi_userinfo&NonBorder=true&NonNav=true");
+console.log(text);

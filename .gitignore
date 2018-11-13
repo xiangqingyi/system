@@ -1,3 +1,5 @@
 /.DS_Store
 /.bowerrc
 /bower.json
+/node_modules/
+/public/assets/plugins
