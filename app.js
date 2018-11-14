@@ -9,7 +9,7 @@ let logger = require('morgan');
 let session = require('express-session');
 let RedisStore = require('connect-redis')(session); //存储session,防止服务重启后session丢失
 let bodyParser = require('body-parser');
-let csrf = require('csurf');
+// let csrf = require('csurf');
 let moment = require('moment');
 let _ = require('lodash');
 // let config = require('./config/config');
@@ -49,7 +49,7 @@ app.locals = {
   homepage: config.homepage.dir,
   core: core,
   config: config,
-  adminDir: config.admin.dir ? ('/'+config.admin/dir) : '',
+  // adminDir: config.admin.dir ? ('/'+config.admin/dir) : '',
   gravatar: gravatar,
   env: config.env
 }
@@ -76,10 +76,10 @@ core.walk(appPath + '/routes/api','middlewares',function(path){
   require(path)(app);
 });
 
-app.use(csrf());
+// app.use(csrf());
 app.use(function(req,res,next) {
   res.header('X-Powered-By','superxqy');
-  res.locals.token = req.csrfToken && req.csrfToken();
+  // res.locals.token = req.csrfToken && req.csrfToken();
   res.locals.query = req.query;
   if(req.session && req,session.user) {
     const roles = util.getRoles(req.session.user);
@@ -125,7 +125,7 @@ app.use(function(err, req, res, next) {
   res.render('error');
 });
 
-app.set('port', process.env.PORT || config.port || 7000);
+app.set('port', process.env.PORT || config.port || 8000);
 let server = app.listen(app.get('port'), function() {
     core.logger.info('網站服務啟動，端口： ' + server.address().port);
     core.logger.info('環境變數： ' + config.env);

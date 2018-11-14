@@ -26,22 +26,11 @@ exports.register = async (req,res) => {
 exports.adminList = async (req,res) => {
     if(req.method === 'GET') {
         const adminList = await User.find({roles: 2});
-        // if (adminList) {
-        //     res.json ({
-        //         success: true,
-        //         adminList: adminList,
-        //         message: 'Get Success'
-        //     })
-        // } else {
-        //     res.json ({
-        //         success: false,
-        //         message: 'no data'
-        //     })
-        // }
         if (adminList) {
             res.render('app/adminList',{
                 message: 'Get success',
-                admins: adminList
+                admins: adminList,
+                user: req.session.user
             })
         }
     } 

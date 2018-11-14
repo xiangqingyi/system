@@ -7,12 +7,12 @@ const core = require('../../../lib/core');
 exports.login = async (req,res) => {
     const nick = req.body.nick;
     const password = req.body.password;
-    const _user = await User.find({nick: nick});   
+    const _user = await User.findOne({nick: nick});   
     if(req.method === 'POST') {
-        if (_user.length === 1) {
+        if (_user) {
             // 已存在就登陆
-             if (_user[0].password === password) {
-                 req.session.user = _user[0];
+             if (_user.password === password) {
+                 req.session.user = _user;
                  let path = core.translateHomePageDir('/');
                  return res.redirect(path);
                 //  return res.json({
@@ -44,9 +44,9 @@ exports.register = async (req,res) => {
    const password = req.body.password;
    const repassword = req.body.repassword;
 
-   const _user = await User.find({nick: nick});
+   const _user = await User.findOne({nick: nick});
    if (req.method === "POST") {
-       if (_user.length === 1) {
+       if (_user) {
         //    已经存在
         return res.json({
             success: false,
@@ -120,21 +120,26 @@ exports.AllNotification  = async (req,res) => {
         }
     } else if (req.method === 'POST') {
         const user = req.session.user;
-        const to_id = req.body.adminId;
+        // const to_id = req.body.adminId;
         const content =  req.body.content;
-        const to_user = await User.find({_id: to_id});
+        const from_id = req.params.id;
+        const to_ids = req.body.receive;
+        // const from_user = await User.find({_id: user_id});
         const new_notification = {
             content: content,
-            from: user._id,
-            to: to_id,
+            from: from_id,
+            to: to_ids,
             broadcast: false,
             status: 1,
         }
         new_notification.unread = [];
-        new_notification.unread.push({
-            userId: to_user[0]._id,
-            realname: to_user[0].realname 
-        })
+        for(let i = 0; i < to_ids.length; i++) {
+            const to_user = await User.findOne({_id: to_ids[i]});
+            new_notification.unread.push({
+                userId: to_user._id,
+                realname: to_user.realname
+            })
+        }
         const _new_notification = await Notification(new_notification);
         const save_new_notification = _new_notification.save();
         if (save_new_notification) {

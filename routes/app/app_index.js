@@ -17,8 +17,8 @@ router.route('/login')
   .all(app.login);
 router.route('/register')
   .all(app.register)
-router.route('/adminlist')
-  .get(app.check,app.adminList);
+router.route('/')
+  .get(app.adminList);
 
   module.exports = function(app) {
       let path = core.translateHomePageDir('/');

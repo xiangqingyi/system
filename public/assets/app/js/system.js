@@ -4,6 +4,7 @@ $(document).ready(function() {
 })
 function init() {
     // $('#notification_receive_realname').click(show_admin_realname)
+    // $('#notificationModal').modal('hide');
     Admin_List_Show();
 }
 
@@ -23,7 +24,7 @@ function Sign_Click() {
         alert("passwrod cannot empty");
         return;
     }
-    axios.post('/system/login',signData)
+    axios.post('/system/api/v1/user/login',signData)
         .then((response) => {
 
         }).catch((error) => {
@@ -51,7 +52,7 @@ function Register_Click() {
         password: password,
         repassword: repassword
     }
-    axios.post('/system/register',registerData)
+    axios.post('/system/api/v1/user/register',registerData)
        .then((response) => {
            if (response.data.success) {
                alert(response.data.message)
@@ -87,11 +88,12 @@ function modal_notification_show() {
     $('#nav-tabContent').find('div[id="'+adminId+'"]').addClass('active show')
     console.log(realname);
     console.log(adminId)
-    $('#receive_realname').val(realname);
+    $('#notification_receive_realname').val(realname);
     $('#content_text').val('');
     $('#adminId').val(adminId);
     $('#notificationModal').modal('show');
 }
+
 // 获取并显示adminlist到select2插件中
 function show_admin_realname() {
     $('.select2').select2();
@@ -110,12 +112,11 @@ function show_admin_realname() {
 }
 // sendNotification click 
 function send_notification() {
-    const adminId = $('#adminId').val();
-    const userid = $('#userid_input').val();
+    // const adminId = $('#adminId').val();
+    const userid = $('#userid_input').val(); // 发送人的_id
     const content = $('#content_text').val();
     const receive = $('#notification_receive_realname').val();
     const notificationData = {
-        adminId: adminId,
         content: content,
         receive: receive,
 
