@@ -2,7 +2,7 @@
 
 let appPath = process.cwd();
 let config = {
-    port: 7000,
+    port: 8000,
     env:process.env.NODE_ENV || 'development',
     
 //    mongondb信息配置
