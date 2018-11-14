@@ -49,6 +49,7 @@ app.locals = {
   homepage: config.homepage.dir,
   core: core,
   config: config,
+  adminDir: config.admin.dir ? ('/'+config.admin/dir) : '',
   gravatar: gravatar,
   env: config.env
 }
