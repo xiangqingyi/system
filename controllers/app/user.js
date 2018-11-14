@@ -9,12 +9,10 @@ let core = require('../../lib/core')
 exports.login = async (req,res) =>{
     
     if (req.method === 'GET') {
-        res.render('app/login',{
+        return res.render('app/login',{
             message: '请先登录'
         })
-    } else if (req.method === 'POST') {
-
-    }
+    } 
 
 }
 exports.register = async (req,res) => {

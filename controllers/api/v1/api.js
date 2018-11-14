@@ -99,8 +99,8 @@ exports.adminList = async (req,res) => {
     }
 }
 
-
-// notification 
+// user端只有发送消息的功能  （接收消息）
+// user端 notification 
 exports.AllNotification  = async (req,res) => {
     if (req.method === 'GET') {
         // 目前还没写到admin

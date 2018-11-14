@@ -13,10 +13,10 @@ const NotificationSchema = new Schema({
         ref: 'User'
     },
     // 目前是一次只能给一个用户发送消息
-    to: {
+    to: [{
         type: Schema.ObjectId,
         ref:'User'
-    },
+    }],
     broadcast: {
         type:Boolean,
         default:false

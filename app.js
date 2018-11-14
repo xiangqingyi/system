@@ -104,9 +104,9 @@ app.use(function(req,res,next) {
 core.walk(appPath + '/routes/app','middlewares',function(path) {
   require(path)(app);
 });
-core.walk(appPath + '/routes/server','middlewares',function(path) {
-  require(path)(app)
-})
+// core.walk(appPath + '/routes/server','middlewares',function(path) {
+//   require(path)(app)
+// })
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
