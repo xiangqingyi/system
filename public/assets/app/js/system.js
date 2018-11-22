@@ -24,7 +24,7 @@ function Sign_Click() {
         alert("passwrod cannot empty");
         return;
     }
-    axios.post('/system/api/v1/user/login',signData)
+    axios.post('/system/login',signData)
         .then((response) => {
 
         }).catch((error) => {
@@ -52,7 +52,7 @@ function Register_Click() {
         password: password,
         repassword: repassword
     }
-    axios.post('/system/api/v1/user/register',registerData)
+    axios.post('/system/register',registerData)
        .then((response) => {
            if (response.data.success) {
                alert(response.data.message)

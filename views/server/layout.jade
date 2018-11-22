@@ -34,7 +34,7 @@ html.no-js
             header#header
                 // logo start
                 .brand
-                    a.logo(href='#{adminDir}')
+                    a.logo(href='admin')
                         | 管理后台
                         //| 实验室
                 // logo end
@@ -54,7 +54,7 @@ html.no-js
                                     i.fa.fa-angle-down
                                 ul.dropdown-menu
                                     li
-                                        a(href='#{adminDir}/me')
+                                        a(href='admin/me')
                                             i.fa.fa-user
                                             |  个人资料
                                     //li
@@ -63,7 +63,7 @@ html.no-js
                                             |  消息 
                                             span#user-inbox.badge.badge-danager 5
                                     li
-                                        a(href='#{adminDir}/user/logout')
+                                        a(href='admin/user/logout')
                                             i.fa.fa-power-off
                                             |  登出
             // sidebar left start
@@ -71,10 +71,10 @@ html.no-js
                 #leftside-navigation.nano
                     ul.nano-content
                         li(class=Path === 'index' ? 'active' : '')
-                            a(href='#{adminDir}')
+                            a(href='/admin')
                                 i.fa.fa-dashboard
                                 span 首页
-                        if (User && (User.status === 101 || Actions.indexOf('CONTENT_INDEX') > -1))
+                        if (User && (User.roles === 2))
                             li.sub-menu(class=Path === 'content' ? 'active' : '')
                                 a(href='javascript:void(0);')
                                     i.fa.fa-file-text
@@ -82,10 +82,10 @@ html.no-js
                                     i.arrow.fa.fa-angle-right.pull-right
                                 ul
                                     li(class=Menu === 'list' ? 'active' : '')
-                                        a(href='#{adminDir}/content') 内容列表
+                                        a(href='admin/content') 内容列表
                                     li(class=Menu === 'add' ? 'active' : '')
-                                        a(href='#{adminDir}/content/add') 添加内容
-                        if (User && (User.status === 101 || Actions.indexOf('CATEGORY_INDEX') > -1))
+                                        a(href='admin/content/add') 添加内容
+                        if (User && (User.rolse === 2))
                             li.sub-menu(class=Path === 'category' ? 'active' : '')
                                 a(href='javascript:void(0);')
                                     i.fa.fa-th
@@ -93,13 +93,13 @@ html.no-js
                                     i.arrow.fa.fa-angle-right.pull-right
                                 ul
                                     li(class=Menu === 'list' ? 'active' : '')
-                                        a(href='#{adminDir}/category') 分类列表
+                                        a(href='admin/category') 分类列表
                                     li(class=Menu === 'add' ? 'active' : '')
-                                        a(href='#{adminDir}/category/add') 添加分类
-                        if (User && (User.status === 101 || Actions.indexOf('COMMENT_INDEX') > -1))
-                            li(class=Path === 'comment' ? 'active' : '')
-                                a(href='#{adminDir}/comment') 评论列表
-                        if (User && (User.status === 101 || Actions.indexOf('USER_INDEX') > -1))
+                                        a(href='admin/category/add') 添加分类
+                        //- if (User && (User.roles === 2))
+                        //-     li(class=Path === 'comment' ? 'active' : '')
+                        //-         a(href='admin/comment') 评论列表
+                        if (User && (User.roles === 2))
                             li.sub-menu(class=Path === 'user' ? 'active' : '')
                                 a(href='javascript:void(0);')
                                     i.fa.fa-users
@@ -107,10 +107,10 @@ html.no-js
                                     i.arrow.fa.fa-angle-right.pull-right
                                 ul
                                     li(class=Menu === 'list' ? 'active' : '')
-                                        a(href='#{adminDir}/user') 用户列表
+                                        a(href='admin/user') 用户列表
                                     li(class=Menu === 'add' ? 'active' : '')
-                                        a(href='#{adminDir}/user/add') 添加用户
-                        if (User && (User.status === 101 || Actions.indexOf('ROLE_INDEX') > -1))
+                                        a(href='admin/user/add') 添加用户
+                        if (User && (User.roles === 2))
                             li.sub-menu(class=Path === 'role' ? 'active' : '')
                                 a(href='javascript:void(0);')
                                     i.fa.fa-unlock-alt
@@ -118,10 +118,10 @@ html.no-js
                                     i.arrow.fa.fa-angle-right.pull-right
                                 ul
                                     li(class=Menu === 'list' ? 'active' : '')
-                                        a(href='#{adminDir}/role') 角色列表
+                                        a(href='admin/role') 角色列表
                                     li(class=Menu === 'add' ? 'active' : '')
-                                        a(href='#{adminDir}/role/add') 添加角色
-                        if (User && (User.status === 101 || Actions.indexOf('FILE_INDEX') > -1))
+                                        a(href='admin/role/add') 添加角色
+                        if (User && (User.roles === 2))
                             li.sub-menu(class=Path === 'file' ? 'active' : '')
                                 a(href='javascript:void(0);')
                                     i.fa.fa-folder-open
@@ -129,33 +129,33 @@ html.no-js
                                     i.arrow.fa.fa-angle-right.pull-right
                                 ul
                                     li(class=Menu === 'list' ? 'active' : '')
-                                        a(href='#{adminDir}/file') 文件列表
+                                        a(href='admin/file') 文件列表
                                     li(class=Menu === 'add' ? 'active' : '')
-                                        a(href='#{adminDir}/file/add') 添加文件
-                        if (User && User.status === 101 || Actions.indexOf('NOTIFICATION_INDEX') > -1)
+                                        a(href='admin/file/add') 添加文件
+                        if (User && User.roles === 2)
                             li.sub-menu(class=Path === 'notification' ? 'active' : '')
                                 a(href='javascript:void(0);')
                                     i.fa.fa-envelope
                                     span 站内信
                                     i.arrow.fa.fa-angle-right.pull-right
-                                    span#notificationAmount_all.pull-right 4
+                                    span#notificationAmount_all.pull-right 
                                 ul
                                     li(class=Menu === 'list' ? 'active' : '')
-                                        a(href='#{adminDir}/notification') 全部
+                                        a(href='admin/notification') 全部
                                         
                                     li(class=Menu === 'received' ? 'active' : '')
-                                        a(href='#{adminDir}/notification/received') 已收到
-                                          span#notificationAmount_to.pull-right 2
+                                        a(href='admin/notification/received') 已收到
+                                          span#notificationAmount_to.pull-right 
                                     li(class=Menu === 'sent' ? 'active' : '')
-                                        a(href='#{adminDir}/notification/sent') 已发出
-                                          span#notificationAmount_from.pull-right 2
-                        if (User && User.status === 101 || Actions.indexOf('MESSAGE_INDEX') > -1)
-                            li(class=Menu === 'list' ? 'active' : '')
-                                a(href='#{adminDir}/message') 留言列表
-                        if (User && User.status === 101 || Actions.indexOf('PAGE_INDEX') > -1)
-                            li.sub-menu(class=Path === 'page' ? 'active' : '')
-                                a(href='#{adminDir}/page') 页面列表
-                        if (User && User.status === 101 || Actions.indexOf('TAG_INDEX') > -1)
+                                        a(href='admin/notification/sent') 已发出
+                                          span#notificationAmount_from.pull-right 
+                        //- if (User && User.roles === 2)
+                        //-     li(class=Menu === 'list' ? 'active' : '')
+                        //-         a(href='admin/message') 留言列表
+                        //- if (User && User.roles === 2)
+                        //-     li.sub-menu(class=Path === 'page' ? 'active' : '')
+                        //-         a(href='admin/page') 页面列表
+                        if (User && User.roles === 2)
                             li.sub-menu(class=Path === 'tag' ? 'active' : '')
                                 a(href='javascript:void(0);')
                                     i.fa.fa-tags
@@ -163,12 +163,12 @@ html.no-js
                                     i.arrow.fa.fa-angle-right.pull-right
                                 ul
                                     li(class=Menu === 'list' ? 'active' : '')
-                                        a(href='#{adminDir}/tag') 标签列表
+                                        a(href='admin/tag') 标签列表
                                     li(class=Menu === 'add' ? 'active' : '')
-                                        a(href='#{adminDir}/tag/add') 添加标签
-                        if (User && User.status === 101 || Actions.indexOf('LOG_INDEX') > -1)
+                                        a(href='admin/tag/add') 添加标签
+                        if (User && User.roles === 2)
                             li.sub-menu(class=Path === 'log' ? 'active' : '')
-                                a(href='#{adminDir}/log')
+                                a(href='admin/log')
                                     i.fa.fa-file
                                     span 日志
                                 
@@ -191,5 +191,6 @@ html.no-js
         script(src='/assets/plugins/messenger/js/messenger-theme-future.js')
         script(src='//cdn.jsdelivr.net/mustache.js/2.3.0/mustache.min.js')
         script(src='/assets/server/js/server.js')
+        script(src="/assets/server/js/application.js")
         // Load these page level functions
         block foot-js

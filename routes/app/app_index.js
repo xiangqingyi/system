@@ -2,7 +2,6 @@
 
 const express = require('express');
 const router = express.Router();
-const api = require('../../controllers/api/v1/api');
 const app = require('../../controllers/app/user');
 const core = require('../../lib/core');
 
@@ -20,7 +19,7 @@ router.route('/register')
 router.route('/')
   .get(app.adminList);
 
-  module.exports = function(app) {
-      let path = core.translateHomePageDir('/');
-      app.use(path,router);
-  }
+module.exports = function(app) {
+  let path = core.translateHomePageDir('/');
+  app.use(path,router);
+}

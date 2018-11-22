@@ -12,15 +12,12 @@ let bodyParser = require('body-parser');
 // let csrf = require('csurf');
 let moment = require('moment');
 let _ = require('lodash');
-// let config = require('./config/config');
 let config = require('./config');
 let core = require('./lib/core');
 // let util = require('./lib/util');
 
 let cookieParser = require('cookie-parser');
 
-let indexRouter = require('./routes/index');
-let usersRouter = require('./routes/users');
 
 let app = express();
 let appPath = process.cwd();
@@ -39,7 +36,9 @@ core.walk(appPath + '/models',null,function(path) {
 // view engine setup
 app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'jade');
-
+app.get('/', function(req, res){
+  res.render("index");
+});
 // 定义全局字段
 app.locals = {
   title: config.title || 'System',
@@ -49,7 +48,6 @@ app.locals = {
   homepage: config.homepage.dir,
   core: core,
   config: config,
-  // adminDir: config.admin.dir ? ('/'+config.admin/dir) : '',
   gravatar: gravatar,
   env: config.env
 }
@@ -61,8 +59,6 @@ app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 
-app.use('/', indexRouter);
-app.use('/users', usersRouter);
 app.use(session({
   resave:true,
   cookie:{
@@ -105,9 +101,9 @@ app.use(function(req,res,next) {
 core.walk(appPath + '/routes/app','middlewares',function(path) {
   require(path)(app);
 });
-// core.walk(appPath + '/routes/server','middlewares',function(path) {
-//   require(path)(app)
-// })
+core.walk(appPath + '/routes/server','middlewares',function(path) {
+  require(path)(app)
+})
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {

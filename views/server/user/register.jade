@@ -36,14 +36,17 @@ block content
                                 strong 登录
                         form(role='form', action='', method='post')
                             .form-group
-                                label(for='J_username') *用户名
-                                input#J_username.form-control(type='text', name='username', placeholder='请输入用户名', autofocus)
+                                label(for='R_nick') *用户名
+                                input#R_nick.form-control(type='text', name='nick', placeholder='请输入用户名', autofocus)
                             .form-group
-                                label(for='J_password') *密码
-                                input#J_password.form-control(type='password', name='password', placeholder='请输入密码')
+                                label(for='R_realnaem') *姓名
+                                input#R_realname.form-control(type="text", name='realname',placeholder='请输入真实姓名', autofocus)
                             .form-group
-                                label(for='J_email') *密码重复
-                                input#J_email.form-control(type='email', name='email', placeholder='请输入Email')
+                                label(for='R_password') *密码
+                                input#R_password.form-control(type='password', name='password', placeholder='请输入密码')
+                            .form-group
+                                label(for='R_repassword') *密码重复
+                                input#R_repassword.form-control(type='password', name='repassword', placeholder='请输入Email')
                             input(type='hidden', name='_csrf', value='#{token}')
                             button.btn.btn-primary.btn-block(type='submit') 注册
 

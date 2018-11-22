@@ -3,7 +3,9 @@
   "version": "0.0.0",
   "private": true,
   "scripts": {
-    "start": "npm run dev"
+    "start": "npm run dev",
+    "local": "cross-env NODE_ENV=local nodemon ./app.js --ignore public/ --ignore views/",
+    "dev": "cross-env NODE_ENV=development nodemon ./app.js --ignore public/ --ignore views/"
   },
   "dependencies": {
     "axios": "^0.18.0",

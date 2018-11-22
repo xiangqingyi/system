@@ -34,7 +34,7 @@ exports.login = async (req,res) => {
             })
         }
     } else if (req.method === 'GET') {
-        res.render('app/login')
+        res.render('/app/login')
     }
 }
 
@@ -74,7 +74,7 @@ exports.register = async (req,res) => {
            }
        }
    } else if (req.method === 'GET') {
-       res.render('app/register')
+       res.render('/app/register')
    }
 }
 
@@ -88,6 +88,7 @@ exports.adminList = async (req,res) => {
                 adminList: adminList,
                 message: 'Get Success'
             })
+     
         } else {
             res.json ({
                 success: false,

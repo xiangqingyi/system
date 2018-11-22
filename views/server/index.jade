@@ -2,7 +2,8 @@ extends layout
 
 block content
     .console
-        h3 你好，#{User.name}
+        h3 你好，#{User.realname}
+        //- h3 你好，test
         //- if(User && User.roles)
             each role in User.roles
                 ul.list-group
@@ -43,23 +44,23 @@ block content
                         p 用户
                     .icon
                         i.fa.fa-users
-        .col-md-3.col-sm-6
-            a(href="#{adminDir}/role/")
-                .dashboard-tile.detail.tile-blue
-                    .content
-                        h1.text-left.timer(data-from='0', data-to='32', data-speed='2500') #{data.role}
-                        p 角色
-                    .icon
-                        i.fa.fa.fa-key
+        //- .col-md-3.col-sm-6
+        //-     a(href="#{adminDir}/role/")
+        //-         .dashboard-tile.detail.tile-blue
+        //-             .content
+        //-                 h1.text-left.timer(data-from='0', data-to='32', data-speed='2500') #{data.role}
+        //-                 p 角色
+        //-             .icon
+        //-                 i.fa.fa.fa-key
 
-        .col-md-3.col-sm-6
-            a(href="#{adminDir}/file/")
-                .dashboard-tile.detail.tile-purple
-                    .content
-                        h1.text-left.timer(data-to='105', data-speed='2500') #{data.file}
-                        p 文件
-                    .icon
-                        i.fa.fa-file
+        //- .col-md-3.col-sm-6
+        //-     a(href="#{adminDir}/file/")
+        //-         .dashboard-tile.detail.tile-purple
+        //-             .content
+        //-                 h1.text-left.timer(data-to='105', data-speed='2500') #{data.file}
+        //-                 p 文件
+        //-             .icon
+        //-                 i.fa.fa-file
     
 
 block foot-js

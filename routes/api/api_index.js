@@ -5,13 +5,13 @@ const router = express.Router();
 const api = require('../../controllers/api/v1/api');
 const core = require('../../lib/core');
 
-router.use(function(req, res, next) {
-    res.setHeader('Access-Control-Allow-Origin', '*')
-    res.setHeader('Access-Control-Allow-Methods', 'GET, POST, PUT, DELETE')
-    res.setHeader('Access-Control-Allow-Headers', 'X-Request-With,content-type,Authorization')
-    res.setHeader("Cache-Control", "private, no-store");
-    next();
-});
+// router.use(function(req, res, next) {
+//     res.setHeader('Access-Control-Allow-Origin', '*')
+//     res.setHeader('Access-Control-Allow-Methods', 'GET, POST, PUT, DELETE')
+//     res.setHeader('Access-Control-Allow-Headers', 'X-Request-With,content-type,Authorization')
+//     res.setHeader("Cache-Control", "private, no-store");
+//     next();
+// });
 router.route('/user/register')
       .post(api.register);
 router.route('/user/login')

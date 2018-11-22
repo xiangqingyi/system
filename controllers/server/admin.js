@@ -3,11 +3,57 @@ const mongoose = require('mongoose');
 const _ = require('lodash');
 const User = mongoose.model('User');
 const Notification = mongoose.model('Notification');
+const Content = mongoose.model('Content');
+const Categoty = mongoose.model('Category');
+const Comment = mongoose.model('Comment');
 const core = require('../../lib/core');
 const util = require('../../lib/util');
 
+
+exports.index = async (req,res) => {
+    if (!req.session.user) {
+        let path = core.translateAdminDir('/login');
+        return res.redirect(path);
+    }
+    let obj = {};
+    let filter = {};
+    const isAdmin = req.isAdmin;
+    if (!isAdmin) {
+        filter = { author: req.session.user._id };
+    }
+    res.render('server/index',{
+        title: '管理后台',
+        User: req.session.user, 
+        data: {
+            content: await Content.count(),
+            category: await Categoty.count(),
+            comment: await Comment.count(),
+            user: await User.count()
+        }
+    })
+    // Promise.all([
+    //     Content.find(filter).count.exec(),
+    //     Categoty.find(filter).count.exec(),
+    //     Comment.find(filter).count.exec(),
+    //     User.find(filter).count.exec()
+    // ]).then((result) => {
+    //     res.render('server/index',{
+    //         title: '管理后台',
+    //         data: {
+    //             content: result[0],
+    //             category: result[1],
+    //             comment: result[2],
+    //             user: result[3],
+    //         }
+    //     })
+    // }).catch((error) => {
+    //     console.log(error.message);
+    // })
+}
+
 exports.login = async (req,res) => {
     if (req.method === 'GET') {
+        req.session.loginReferer = req.headers.referer;
         res.render('server/user/login',{
             message: '请先登录'
         }) 
@@ -20,7 +66,10 @@ exports.login = async (req,res) => {
             // 如果存在这个就验证密码
             if (_user.password === password) {
                 req.session.user = _user;
-                return res.redirect('......');  //验证成功就跳转到主页面上
+                req.session.cookie.user = _user;
+                let path = core.translateAdminDir('/');
+           
+                return res.redirect(path)  //验证成功就跳转到主页面上
             } else {
                 return res.json({
                     success: false,
@@ -137,3 +186,4 @@ exports.notification_one_item = async (req, res) => {
         })
     }
 }
+
