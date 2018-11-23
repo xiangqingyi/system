@@ -31,24 +31,7 @@ exports.index = async (req,res) => {
             user: await User.count()
         }
     })
-    // Promise.all([
-    //     Content.find(filter).count.exec(),
-    //     Categoty.find(filter).count.exec(),
-    //     Comment.find(filter).count.exec(),
-    //     User.find(filter).count.exec()
-    // ]).then((result) => {
-    //     res.render('server/index',{
-    //         title: '管理后台',
-    //         data: {
-    //             content: result[0],
-    //             category: result[1],
-    //             comment: result[2],
-    //             user: result[3],
-    //         }
-    //     })
-    // }).catch((error) => {
-    //     console.log(error.message);
-    // })
+
 }
 
 exports.login = async (req,res) => {
@@ -184,6 +167,97 @@ exports.notification_one_item = async (req, res) => {
             title: one_item.content,
             notification: one_item_notification
         })
+    }
+}
+
+
+// User版块 （目前没有权限的判断 之后加）
+// user列表
+exports.userList =  async (req,res) => {
+    if (req.method === "GET") {
+        const users = await User.find();
+        res.render('server/user/list', {
+            title: '用户列表',
+            Menu: 'list',
+            users: users
+        })
+    }
+}
+// 编辑用户 
+exports.userEdit = async (req,res) => {
+    if (req.method === 'GET') {
+        let id = req.params.id;
+        const _user = await User.findById(id);
+        if (_user) {
+            res.render('server/user/edit',{
+                user: _user
+            }) 
+        }
+    } else if (req.method === 'POST') {
+        const obj = _.pick(req.body, "e_nick", "e_realname", "e_roles");
+        let id = req.params.id;
+        const _user = await User.findById(id);
+        if (_user) { 
+            //存在才可以修改
+            _.assign(_user,obj);
+            _user.save();
+            req.session.user = _user;
+            res.render('server/info',{
+                message: '更新成功'
+            });
+        } else {
+            // 不存在就不能修改  防die
+            res.render('server/info',{
+                message: '用户不存在'
+            })
+        }
+    }
+}
+
+exports.userAdd = async (req,res) => {
+    if (req.method === 'GET') {
+        res.render('server/user/add',{
+            Menu: 'add'
+        })
+    } else if (req.method === 'POST') {
+        const obj = _.pick(req.body,"a_nick","a_password","a_realname","a_roles")
+        const _user = await User.findOne({nick: obj.a_nick});
+        if (_user) {
+            res.json({
+                success: false,
+                message: '该昵称被占用'
+            })
+        } else {
+            const newUser = {
+                roles: obj.a_roles,
+                nick: obj.a_nick,
+                password: obj.a_password,
+                realname: obj.a_realname
+            } 
+            const _newUser = await User(newUser);
+            if (_newUser) {
+                res.json({
+                    success: true,
+                    message: '添加用户成功'
+                })
+            }
+        }
+    }
+}
+
+exports.userOne = async (req,res) => {
+    if (req.method === 'GET') {
+        let id = req.params.id;
+        const _user = await User.findById(id);
+        if (_user) {
+            res.render('server/user/item',{
+                user: _user
+            })
+        } else {
+            res.render('server/info',{
+                message: '该用户不存在'
+            })
+        }
     }
 }
 

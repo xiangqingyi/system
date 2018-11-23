@@ -10,7 +10,10 @@ router.route('/login')
    .all(server.login);
 router.route('/register')
    .all(server.register);
-router.route('/').get(server.index);   
+router.route('/').get(server.index);  
+router.route('/user').all(server.userList);
+router.route('/user/:id/edit').all(server.userEdit);
+router.route('/user/add').all(server.userAdd); 
 
 
 module.exports = function(app) {

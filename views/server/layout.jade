@@ -50,7 +50,7 @@ html.no-js
                                 img.img-circle(src='#{avatar}', alt='')
                             li.dropdown.settings
                                 a.dropdown-toggle(data-toggle='dropdown', href='')
-                                    | #{User.name}
+                                    | #{User.realname}
                                     i.fa.fa-angle-down
                                 ul.dropdown-menu
                                     li
@@ -85,17 +85,17 @@ html.no-js
                                         a(href='admin/content') 内容列表
                                     li(class=Menu === 'add' ? 'active' : '')
                                         a(href='admin/content/add') 添加内容
-                        if (User && (User.rolse === 2))
-                            li.sub-menu(class=Path === 'category' ? 'active' : '')
-                                a(href='javascript:void(0);')
-                                    i.fa.fa-th
-                                    span 分类
-                                    i.arrow.fa.fa-angle-right.pull-right
-                                ul
-                                    li(class=Menu === 'list' ? 'active' : '')
-                                        a(href='admin/category') 分类列表
-                                    li(class=Menu === 'add' ? 'active' : '')
-                                        a(href='admin/category/add') 添加分类
+                        //- if (User && (User.rolse === 2))
+                        //-     li.sub-menu(class=Path === 'category' ? 'active' : '')
+                        //-         a(href='javascript:void(0);')
+                        //-             i.fa.fa-th
+                        //-             span 分类
+                        //-             i.arrow.fa.fa-angle-right.pull-right
+                        //-         ul
+                        //-             li(class=Menu === 'list' ? 'active' : '')
+                        //-                 a(href='admin/category') 分类列表
+                        //-             li(class=Menu === 'add' ? 'active' : '')
+                        //-                 a(href='admin/category/add') 添加分类
                         //- if (User && (User.roles === 2))
                         //-     li(class=Path === 'comment' ? 'active' : '')
                         //-         a(href='admin/comment') 评论列表
@@ -107,9 +107,9 @@ html.no-js
                                     i.arrow.fa.fa-angle-right.pull-right
                                 ul
                                     li(class=Menu === 'list' ? 'active' : '')
-                                        a(href='admin/user') 用户列表
+                                        a(href='user') 用户列表
                                     li(class=Menu === 'add' ? 'active' : '')
-                                        a(href='admin/user/add') 添加用户
+                                        a(href='user/add') 添加用户
                         if (User && (User.roles === 2))
                             li.sub-menu(class=Path === 'role' ? 'active' : '')
                                 a(href='javascript:void(0);')

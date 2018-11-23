@@ -121,7 +121,7 @@ app.use(function(err, req, res, next) {
   res.render('error');
 });
 
-app.set('port', process.env.PORT || config.port || 8000);
+app.set('port', process.env.PORT || config.port || 7000);
 let server = app.listen(app.get('port'), function() {
     core.logger.info('網站服務啟動，端口： ' + server.address().port);
     core.logger.info('環境變數： ' + config.env);

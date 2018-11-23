@@ -6,23 +6,23 @@ block content
             form(action='', method='post')
                 .form-group
                     label 用户名
-                    input.form-control(name='username', value='#{user.username}')
+                    input.form-control(name='e_nick', value='#{user.nick}')
                 .form-group
                     label 姓名
-                    input.form-control(name='name', value='#{user.name}')
-                .form-group
-                    label Email
-                    input.form-control(name='email', value='#{user.email}')
+                    input.form-control(name='e_realname', value='#{user.realname}')
                 .form-group
                     label 角色
-                    select.form-control.input-sm(multiple, name='roles')
-                        - each role in roles
-                            if (user.roles.indexOf(role.id) > -1)
-                                option(value='#{role.id}', selected)
-                                    | #{role.name}
+                    select.form-control.input-sm(multiple, name='e_roles')
+                            if (user.roles === 2)
+                                option(value='#{user.roles}', selected)
+                                    | 管理员
+                                option(value='#{user.roles}')
+                                    | 普通用户
                             else
-                                option(value='#{role.id}')
-                                    | #{role.name}
+                                option(value='#{user.roles}', selected)
+                                    | 普通用户
+                                option(value="#{user.roles}")
+                                    | 管理员
                 input(type='hidden', name='_csrf', value='#{token}')
                 button.btn.btn-primary(type='submit') 提交
 
