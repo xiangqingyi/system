@@ -179,7 +179,8 @@ exports.userList =  async (req,res) => {
         res.render('server/user/list', {
             title: '用户列表',
             Menu: 'list',
-            users: users
+            users: users,
+            User: req.session.user
         })
     }
 }
@@ -190,7 +191,8 @@ exports.userEdit = async (req,res) => {
         const _user = await User.findById(id);
         if (_user) {
             res.render('server/user/edit',{
-                user: _user
+                user: _user,
+                User: req.session.user
             }) 
         }
     } else if (req.method === 'POST') {
@@ -217,7 +219,8 @@ exports.userEdit = async (req,res) => {
 exports.userAdd = async (req,res) => {
     if (req.method === 'GET') {
         res.render('server/user/add',{
-            Menu: 'add'
+            Menu: 'add',
+            User: req.session.user
         })
     } else if (req.method === 'POST') {
         const obj = _.pick(req.body,"a_nick","a_password","a_realname","a_roles")
