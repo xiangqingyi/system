@@ -52,8 +52,8 @@ block foot-js
                 var messenger = Messenger().post("处理中...");
                 $.post(url, {_csrf: token}, function(res) {
                     console.log(res);
-                    var status = res.status;
-                    if (status) {
+                    var success = res.success;
+                    if (success) {
                         messenger.update({
                             message: '删除成功',
                             hideAfter: 3,

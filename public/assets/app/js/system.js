@@ -105,7 +105,6 @@ function show_admin_realname() {
               $('#notification_receive_realname option').remove();
               for (let i = 0 ; i < response.data.adminList.length ; i++){
                   $('#notification_receive_realname').append(new Option(response.data.adminList[i].realname,response.data.adminList[i]._id));
-
               }
           }
       })
@@ -118,13 +117,14 @@ function send_notification() {
     const receive = $('#notification_receive_realname').val();
     const notificationData = {
         content: content,
-        receive: receive,
+        receive: receive
 
     }
     axios.post('/system/api/v1/notification/'+userid,notificationData)
           .then((response) => {
               if (response.data.success) {
                   alert(response.data.message);
+                  swal('发送成功','', 'success');
                   $('#notificationModal').modal('hide');
               } else {
                   alert(response.data.message)

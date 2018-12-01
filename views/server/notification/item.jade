@@ -5,8 +5,14 @@ block content
         .col-md-12
             .lists
                 p 内容：#{notification.content}
-                p 来自：#{notification.from}
-                p 发给：#{notification.to}
-                p 已读：#{notification.read}
-                p 未读：#{notification.unread}
+                p 来自：#{notification.from.realname}
+                p 发给： 
+                    each item in notification.to
+                        span.badge.badge-default #{item && item.realname}
+                p 已读：
+                    each item in notification.read
+                        span.badge.badge-default #{item && item.realname}
+                p 未读：
+                    each item in notification.unread
+                        span.badge.badge-default #{item && item.realname}
                 p 日期：#{notification.created}

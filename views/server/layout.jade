@@ -107,9 +107,9 @@ html.no-js
                                     i.arrow.fa.fa-angle-right.pull-right
                                 ul
                                     li(class=Menu === 'list' ? 'active' : '')
-                                        a(href='user') 用户列表
+                                        a(href='/admin/user') 用户列表
                                     li(class=Menu === 'add' ? 'active' : '')
-                                        a(href='user/add') 添加用户
+                                        a(href='/user/add') 添加用户
                         if (User && (User.roles === 2))
                             li.sub-menu(class=Path === 'role' ? 'active' : '')
                                 a(href='javascript:void(0);')
@@ -141,13 +141,13 @@ html.no-js
                                     span#notificationAmount_all.pull-right 
                                 ul
                                     li(class=Menu === 'list' ? 'active' : '')
-                                        a(href='admin/notification') 全部
+                                        a(href='/admin/notification') 全部
                                         
                                     li(class=Menu === 'received' ? 'active' : '')
-                                        a(href='admin/notification/received') 已收到
+                                        a(href='/admin/notification/received') 已收到
                                           span#notificationAmount_to.pull-right 
                                     li(class=Menu === 'sent' ? 'active' : '')
-                                        a(href='admin/notification/sent') 已发出
+                                        a(href='/admin/notification/sent') 已发出
                                           span#notificationAmount_from.pull-right 
                         //- if (User && User.roles === 2)
                         //-     li(class=Menu === 'list' ? 'active' : '')
@@ -183,6 +183,8 @@ html.no-js
             
         // Global JS
         script(src='//cdn.jsdelivr.net/jquery/3.2.1/jquery.min.js')
+        // axios
+        script(src='/assets/plugins/axios/dist/axios.min.js')
         script(src='//cdn.jsdelivr.net/jquery.form/4.2.0/jquery.form.min.js')
         script(src='//cdn.jsdelivr.net/bootstrap/3.3.7/js/bootstrap.min.js')
         script(src='//cdn.jsdelivr.net/bootstrap3-dialog/1.35.4/bootstrap-dialog.min.js')

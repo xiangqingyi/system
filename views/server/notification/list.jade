@@ -4,7 +4,7 @@ block head-css
 block content
     .row
         .col-md-12
-            a.btn.btn-info.J_post(href='#{adminDir}/notification/add') 发私信
+            a.btn.btn-info.J_post(href='/admin/notification/add') 发私信
             table.table.table-striped
                 thead
                     tr
@@ -15,31 +15,37 @@ block content
                         th 未读
                         th 已读
                         th 时间
-                        th 操作
+                        th 
+                           if (own) 
+                              | 操作
+                        //- th 操作
                 tbody
                     - each notification in notifications
                         tr
-                            td
-                                a(href='#{adminDir}/notification/#{notification.id}') #{notification.content}
-                            td #{notification.from && notification.from.username}
+                            td 
+                               a(href='/admin/notification/#{notification.id}') #{notification.content}
+                            td #{notification.from.realname}
                             td 
                                 each item in notification.to
-                                    span.badge.badge-default #{item && item.username}
+                                    span.badge.badge-default #{item && item.realname}
                             //td #{notification.isRead ? '已读' : '未读'}
                             td
                                 each item in notification.unread
-                                    span.badge.badge-default #{item && item.username}
+                                    span.badge.badge-default #{item && item.realname}
                             td
                                 each item in notification.read
-                                    span.badge.badge-default #{item && item.username}
+                                    span.badge.badge-default #{item && item.realname}
                             td
                                 | #{moment(notification.created).format('LLL')}
-                            td
-                                a.btn.btn-danger.btn-xs.J_del(href='#{adminDir}/notification/#{notification.id}/del') 删除
-            if (pageInfo && pageInfo.totalPage > 1)
-                - pageInfo.query = query
-                include ../mixin
-                +pagination(pageInfo)
+                            td   
+                                if (own) 
+                                   a.btn.btn-danger.btn-xs.J_del(href='/notification/#{notification.id}/del') 删除
+                            //- td
+                            //-     a.btn.btn-danger.btn-xs.J_del(href='/notification/#{notification.id}/del') 删除
+            //- if (pageInfo && pageInfo.totalPage > 1)
+            //-     - pageInfo.query = query
+            //-     include ../mixin
+            //-     +pagination(pageInfo)
     script#J_tmpl_add(type='x-tmpl-mustache')
         .form-group
             label 收信人
@@ -64,8 +70,6 @@ block foot-js
             var url = $this.attr('href');
             var request = function(to, content, dialog) {
                 $.post(url, {
-                    _csrf: token,
-                    //from: user._id,
                     to: to,
                     content: content
                 }, function(json) {
@@ -83,10 +87,22 @@ block foot-js
                         label: '发送',
                         cssClass: 'btn-primary',
                         action: function(dialog) {
-                            console.log(dialog)
                             var to = dialog.$modalBody.find('.J_to_users').val();
-                            var content = dialog.$modalBody.find('textarea').val();
-                            request(to, content, dialog);
+                            //- const to = $('.J_to_users').val();
+                            console.log(to);
+                            const content = dialog.$modalBody.find('textarea').val();
+                            //- request(to, content, dialog);
+                            const data = {
+                                recive: to,
+                                content: content,
+                            }
+                            axios.post('/admin/notification/add',data)
+                               .then((response) => {
+                                   if (response.data.success) {
+                                       dialog.close();
+                                       swal('发送成功','', 'success');
+                                   }
+                               })
                         }
                     },
                     {
@@ -97,60 +113,18 @@ block foot-js
                     }
                 ]
             });
-            
-            $dialog.$modalBody.find(".J_to_users").select2({
-                ajax: {
-                    //url: "https://api.github.com/search/repositories",
-                    url: '#{util.translateAdminDir("/user/query"))',
-                    //dataType: 'json',
-                    delay: 250,
-                    data: function(params) {
-                        return {
-                            q: params.term, // search term
-                            page: params.page
-                        };
-                    },
-                    processResults: function(data, params) {
-                        // parse the results into the format expected by Select2
-                        // since we are using custom formatting functions we do not need to
-                        // alter the remote JSON data, except to indicate that infinite
-                        // scrolling can be used
-                        params.page = params.page || 1;
-                        data.items.map(function(item) {
-                            item.id = item._id;
-                            return item;
-                        });
-                        console.log(data.items);
-                        return {
-                            results: data.items,
-                            pagination: {
-                                more: (params.page * 30) < data.total_count
-                            }
-                        };
-                    },
-                    cache: true
-                },
-                escapeMarkup: function(markup) {
-                    return markup;
-                },
-                minimumInputLength: 1,
-                templateResult: function (repo) {
-                    if (repo.loading) return repo.text;
-
-                    var markup = '<div class="clearfix">' +
-                        '<div clas="col-sm-10">' +
-                        '<div class="clearfix">' +
-                        '<div class="col-sm-6">' + repo.name + '</div>' +
-                        '</div>';
-
-                    markup += '</div></div>';
-
-                    return markup;
-                },
-                templateSelection: function (repo) {
-                    return repo.name || repo.text;
-                }
-            });
+            $dialog.$modalBody.find(".J_to_users").select2();
+            $('.J_to_users').val('');
+            $('.J_to_users').trigger('change');
+            axios.get('/admin/user/query')
+               .then((response) => {
+                   if (response.data.success) {
+                       $('.J_to_users option').remove();
+                       for (let i = 0; i < response.data.items.length; i++) {
+                           $('.J_to_users').append(new Option(response.data.items[i].nick,response.data.items[i]._id));
+                       }
+                   }
+               });
         });
 
         $(document).on('click', '.J_del', function(e) {
@@ -161,8 +135,8 @@ block foot-js
             var messenger = Messenger().post("处理中...");
             $.post(url, {_csrf: token}, function(json) {
                 console.log(json);
-                var status = json.status;
-                if(status === true) {
+                var success = json.success;
+                if(success === true) {
                     messenger.update({
                         message: '删除成功',
                         hideAfter: 3,
