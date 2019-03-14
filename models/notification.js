@@ -40,6 +40,10 @@ const NotificationSchema = new Schema({
     status: {
         type: Number,    
         default: 0
+    },
+    update: {
+        type: Date,
+        default: Date.now
     }
 });
 mongoose.model('Notification',NotificationSchema);
