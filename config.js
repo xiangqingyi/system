@@ -25,7 +25,7 @@ let config = {
     sessionSecret: 'SessionSecret',
     // jwt 
     jwt: {
-        secret: 'JWTSecret',
+        secret: 'JWTSecretUpdate',
         options: {
             exipresIn: '10h'    // 过期时间
         }
