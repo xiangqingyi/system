@@ -8,7 +8,7 @@
     "dev": "cross-env NODE_ENV=development nodemon ./app.js --ignore public/ --ignore views/"
   },
   "dependencies": {
-    "axios": "^0.18.0",
+    "axios": "^0.21.1",
     "body-parser": "^1.18.3",
     "bson-objectid": "^1.2.4",
     "compression": "^1.7.3",
